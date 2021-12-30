@@ -40,19 +40,22 @@ def get_shop_list_by_dishes(dishes, person_count):
     for dish in dishes:
         if dish in cook_book.keys():
             for ing in cook_book[dish]:
-                ing_list[ing['ingredient_name']] = {}
                 if ing['ingredient_name'] not in ing_list.keys():
+                    ing_list[ing['ingredient_name']] = {}
                     q = int(ing['quantity']) * person_count
+                    ing_list[ing['ingredient_name']] = {'quantity': q, 'measure': ing['measure']}
                 else:
                     q = int(ing['quantity']) * person_count
-                    ing['quantity'] = int(ing['quantity']) + q
-                ing_list[ing['ingredient_name']] = {'quantity': q, 'measure': ing['measure']}
+                    o = q + ing_list[ing['ingredient_name']]['quantity']
+                    ing_list[ing['ingredient_name']] = {'quantity': o, 'measure': ing['measure']}
+        else:
+            print('error')
 
 
     print(ing_list)
 
 
-get_shop_list_by_dishes(['Фахитос', 'Запеченный картофель'], 2)
+get_shop_list_by_dishes(['Фахитос','Запеченный картофель'], 2)
 
 
 

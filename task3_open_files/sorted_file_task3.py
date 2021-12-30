@@ -1,21 +1,26 @@
 from pprint import pprint
+import os
+path = os.getcwd()
+
 
 sorted_texts = []
 text_dict = {}
 
 
-def get_data(file_name):
-    with open(file_name, encoding='utf-8') as file:
-        lines = 0
-        for line in file:
-            lines += 1
-        sorted_texts.append([lines, file_name])
+def get_data(path):
+    for file_name in os.listdir(path):
+        if file_name.endswith(".txt"):
+            with open(file_name, encoding='utf-8') as file:
+                text_size = len(file.readlines())
+            sorted_texts.append([text_size, file_name])
+            sorted_texts.sort()
 
 
-def write_files(file_name):
-    with open(file_name, encoding='utf-8') as file:
-        text_dict[file_name] = ''.join(file.readlines())
-
+def write_files(path):
+    for file_name in os.listdir(path):
+        if file_name.endswith(".txt"):
+            with open(file_name, encoding='utf-8') as file:
+                text_dict[file_name] = ''.join(file.readlines())
 
 
 def write_data(file_name):
@@ -33,23 +38,8 @@ def read_data(file_name):
             pprint(str(line))
 
 
-def sort_data():
-    sorted_texts.sort()
-
-
-get_data('1.txt')
-get_data('2.txt')
-get_data('3.txt')
-
-
-sort_data()
-
-write_files('1.txt')
-write_files('2.txt')
-write_files('3.txt')
-
-write_data('4_sorted.txt')
-read_data('4_sorted.txt')
-
-
+get_data(path)
+write_files(path)
+write_data('finish.docx')
+read_data('finish.docx')
 
